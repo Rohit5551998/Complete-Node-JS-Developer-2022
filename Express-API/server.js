@@ -15,6 +15,14 @@ const friends = [
     }
 ];
 
+app.use((req, res, next) => {
+    const start = Date.now();
+    next();
+    // After Endpoint processing
+    const delta = Date.now() - start;
+    console.log(`${req.method} ${req.url} ${delta}ms`);
+});
+
 app.get('/friends', (req, res) => {
     // res.send('Heeeeellloooooo!!!!!');
     res.json(friends)
