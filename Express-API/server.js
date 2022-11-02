@@ -1,6 +1,6 @@
 const express = require('express');
-const messagesController = require('./controllers/messages.controllers');
-const friendsController = require('./controllers/friends.controllers');
+const friendsRouter = require('./routes/friends.router');
+const messagesRouter = require('./routes/messages.router');
 
 const app = express();
 
@@ -11,17 +11,12 @@ app.use((req, res, next) => {
     next();
     // After Endpoint processing
     const delta = Date.now() - start;
-    console.log(`${req.method} ${req.url} ${delta}ms`);
+    console.log(`${req.method} ${req.baseUrl}${req.url} ${delta}ms`);
 });
 
 app.use(express.json());
-
-app.post('/friends', friendsController.postFriend);
-app.get('/friends', friendsController.getFriends);
-app.get('/friends/:friendId', friendsController.getFriend);
-
-app.get('/messages', messagesController.getMessages);
-app.post('/messages', messagesController.postMessage);
+app.use('/friends', friendsRouter);
+app.use('/messages', messagesRouter);
 
 app.listen(PORT, () => {
     console.log(`Listening on ${PORT}...`)
