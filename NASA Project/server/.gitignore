@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# FE build
+/public
+
 # production
 /build
 
