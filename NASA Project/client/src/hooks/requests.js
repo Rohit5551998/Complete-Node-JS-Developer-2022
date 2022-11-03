@@ -29,15 +29,26 @@ async function httpSubmitLaunch(launch) {
       body: JSON.stringify(launch),
     });
   } catch(err) {
+    console.log(err);
     return {
       ok: false,
     };
   }
 }
 
+// T̶O̶D̶O̶:̶ O̶n̶c̶e̶ A̶P̶I̶ i̶s̶ r̶e̶a̶d̶y̶.̶
+// Delete launch with given ID.
 async function httpAbortLaunch(id) {
-  // TODO: Once API is ready.
-  // Delete launch with given ID.
+  try {
+    return await fetch(`${API_URL}/launches/${id}`, {
+      method: "DELETE"
+    })
+  } catch(err) {
+    console.log(err);
+    return {
+      ok: false,
+    }
+  }
 }
 
 export {
