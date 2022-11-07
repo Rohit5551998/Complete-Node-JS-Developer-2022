@@ -26,7 +26,7 @@ Solution to resolve problem of returning habitable planets before completely rea
 Await Promise will ensure data is read completely first
 */
 
-function loadPlanets() {
+function loadPlanetsData() {
     return new Promise((resolve, reject) => {
         fs.createReadStream(path.join(__dirname, '..', '..', 'data', 'kepler_data.csv'))
             .pipe(parse({
@@ -82,6 +82,6 @@ async function savePlanet(planet) {
 }
 
 module.exports = {
-    loadPlanets,
+    loadPlanetsData,
     getAllPlanets,
 };
