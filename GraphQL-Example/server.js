@@ -1,36 +1,50 @@
+const path = require('path');
 const express = require('express');
-const { buildSchema } = require('graphql');
+// const { buildSchema } = require('graphql');
 const { graphqlHTTP } = require('express-graphql');
 
-const schema = buildSchema(`
-    type Query {
-        products: [Product]
-        orders: [Order]
-    }
+const { loadFilesSync } = require('@graphql-tools/load-files');
+const { makeExecutableSchema } = require('@graphql-tools/schema');
 
-    type Product {
-        id: ID!
-        description: String!
-        price: Float!
-        reviews: [Review]
-    }
+// const typesArray = loadFilesSync(path.join(__dirname, '**/*.graphql'));
+const typesArray = loadFilesSync('**/*', {
+    extensions: ['graphql'],
+});
 
-    type Review {
-        rating: Int!
-        comment: String
-    }
+const schema = makeExecutableSchema({
+    // typeDefs: [schemaText] //schemaText was originally combination of graphql files
+    typeDefs: typesArray,
+});
 
-    type Order {
-        date: String!
-        subtotal: Float!
-        items: [OrderItem]
-    }
+// const schema = buildSchema(`
+//     type Query {
+//         products: [Product]
+//         orders: [Order]
+//     }
 
-    type OrderItem {
-        products: Product!
-        quantity: Int!
-    }
-`);
+//     type Product {
+//         id: ID!
+//         description: String!
+//         price: Float!
+//         reviews: [Review]
+//     }
+
+//     type Review {
+//         rating: Int!
+//         comment: String
+//     }
+
+//     type Order {
+//         date: String!
+//         subtotal: Float!
+//         items: [OrderItem]
+//     }
+
+//     type OrderItem {
+//         products: Product!
+//         quantity: Int!
+//     }
+// `);
 
 // const root = {
 //     description: 'Red Shoe',
@@ -38,34 +52,8 @@ const schema = buildSchema(`
 // };
 
 const root = {
-    products: [
-        {
-            id: 'redshoe',
-            description: 'Red Shoe',
-            price: 42.12,
-        }, 
-        {
-            id: 'bluejean',
-            description: 'Blue Jeans',
-            price: 55.55,
-        }
-    ],
-    orders: [
-        {
-            date: '2005-05-05',
-            subtotal: 90.22,
-            items: [
-                {
-                    products: {
-                        id: 'redshoe',
-                        description: 'Old Red Shoe',
-                        price: 45.11,
-                    },
-                    quantity: 2,
-                }
-            ]
-        }
-    ]
+    products: require('./products/products.models'),
+    orders: require('./orders/orders.models'),
 }
 
 const app = express();
