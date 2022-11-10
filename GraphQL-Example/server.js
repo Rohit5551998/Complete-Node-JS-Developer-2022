@@ -14,6 +14,19 @@ const typesArray = loadFilesSync('**/*', {
 const schema = makeExecutableSchema({
     // typeDefs: [schemaText] //schemaText was originally combination of graphql files
     typeDefs: typesArray,
+    resolvers: {
+        Query: {
+            products: async (parent) => {
+                console.log('Getting the products');
+                const product = await Promise.resolve(parent.products);
+                return product;
+            },
+            orders: (parent) => {
+                console.log('Getting orders');
+                return parent.orders
+            },
+        }
+    }
 });
 
 // const schema = buildSchema(`
