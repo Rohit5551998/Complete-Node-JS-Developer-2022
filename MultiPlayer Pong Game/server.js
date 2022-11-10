@@ -17,12 +17,12 @@ io.on('connection', (socket) => {
     console.log('A User Connected', socket.id);
 
     socket.on('ready', () => {
-        console.log('Player ready', scoket.id);
+        console.log('Player ready', socket.id);
 
         readyPlayerCount++;
 
         if (readyPlayerCount === 2) {
-            //broadcast('startGame')
+            io.emit('startGame', socket.id);
         }
     });
 });
