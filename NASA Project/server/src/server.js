@@ -7,7 +7,7 @@ const { loadPlanetsData } = require('./models/planets.models');
 const { loadLaunchData } = require('./models/launches.models');
 const { mongoConnect } = require('./services/mongo');
 
-const PORT =  process.env.PORT || 8000;
+const PORT = process.env.PORT || 8000;
 
 const server = http.createServer(app);
 
@@ -20,9 +20,17 @@ async function startServer() {
 
     server.listen(PORT, () => {
         console.log(`Listening on Port ${PORT}...`);
-    }); 
+    });
 }
 
 startServer();
+
+// Comment in main package.json
+// "_comment": [
+//     "server",
+//     "cd server && npm run watch",
+//     "client",
+//     "cd client && npm start"
+//   ],
 
 

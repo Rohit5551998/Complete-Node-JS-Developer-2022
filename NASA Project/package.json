@@ -4,12 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "_comment": [
-      "server",
-      "cd server && npm run watch",
-      "client",
-      "cd client && npm start"
-    ],
     "install-server": "npm install --prefix server",
     "install-client": "npm install --prefix client",
     "install": "npm run install-server && npm run install-client",
